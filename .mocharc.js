@@ -2,7 +2,7 @@
 
 module.exports = {
    "watch": true,
-   "watch-extensions": "ts",
+   "watch-files": "src/**/*.ts",
    "recursive": true,
    "reporter": "min",
    "slow": 20000,
