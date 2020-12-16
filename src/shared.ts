@@ -16,6 +16,16 @@ export enum Compass {
    West = 3
 }
 
+export function CompassFromCode(code: string): Compass {
+   switch(code) {
+      case 'N': return Compass.North;
+      case 'S': return Compass.South;
+      case 'E': return Compass.East;
+      case 'W': return Compass.West;
+      default: throw 'Invalid compass code'
+   }
+}
+
 export function CompassTurn(direction : Compass, left : boolean) : Compass {
    return (direction + (left ? 3 : 1)) % 4;
 }
