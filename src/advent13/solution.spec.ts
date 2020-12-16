@@ -11,11 +11,17 @@ describe(`Advent of Code Day ${solution.dayNumber}`, () => {
     expect(s.smallestWait()).to.equal(295);
   });
 
+  it('should find schedule period', () => {
+    let s = new BusSchedule(['939','7,13,x,x,59,x,31,19']);
+
+    expect(''+s.findTimestamp()).to.equal('1068781');
+  });
+
   it('should solve part 1', () => {
     expect(solution.solvePart1()).to.equal('4315');
   });
 
   it('should solve part 2', () => {
-    expect(solution.solvePart2()).to.equal('zz');
+    expect(solution.solvePart2()).to.equal('556100168221141');
   });
 });
