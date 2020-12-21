@@ -5,7 +5,7 @@
   "scripts": {
     "index": "ts-node src/index.ts",
     "start": "ts-mocha src/**/*.spec.ts",
-    "test": "ts-mocha src/advent16/*.spec.ts"
+    "test": "ts-mocha src/advent17/*.spec.ts"
   },
   "author": "Tony McGee <tmcgee.au@gmail.com>",
   "license": "ISC",
