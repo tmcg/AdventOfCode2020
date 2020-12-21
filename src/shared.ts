@@ -43,6 +43,13 @@ export interface Vec3 {
    z : number;
 }
 
+export interface Vec4 {
+   x : number;
+   y : number;
+   z : number;
+   w : number;
+}
+
 export class Vector2 implements Vec2 {
    constructor(public x: number, public y: number) {}
 
@@ -53,6 +60,12 @@ export class Vector3 implements Vec3 {
    constructor(public x: number, public y: number, public z: number) {}
 
    id = () => `${this.x},${this.y},${this.z}`;
+}
+
+export class Vector4 implements Vec4 {
+   constructor(public x: number, public y: number, public z: number, public w: number) {}
+
+   id = () => `${this.x},${this.y},${this.z},${this.w}`;
 }
 
 export interface Dictionary<T> {
