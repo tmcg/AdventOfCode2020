@@ -1,5 +1,4 @@
 
-import { textSpanIntersectsWithPosition } from 'typescript';
 import { ISolution, InputFile, Util } from '../shared';
 
 type Token = '(' | ')' | '+' | '*' | number;
@@ -19,7 +18,7 @@ export class ExpressionSolver {
    parse(input: Token[]): TokenOrSub[] {
       let result: TokenOrSub[] = [];
 
-      while(true) {
+      while (true) {
          if (input.length === 0)
             return result;
 
@@ -38,30 +37,38 @@ export class ExpressionSolver {
       }
    }
 
-   calcExpr(): number {
-      return this.calc(this.expr);
+   calcExpr(rules: number): number {
+      return this.calc(this.expr, rules);
    }
 
-   calc(expr: TokenOrSub[]): number {
+   calc(expr: TokenOrSub[], rules: number): number {
 
       let basic = expr.map(e => {
-         if (typeof(e) !== 'string' && typeof(e) !== 'number') {
-            return this.calc(<TokenOrSub[]>e);
+         if (typeof (e) !== 'string' && typeof (e) !== 'number') {
+            return this.calc(<TokenOrSub[]>e, rules);
          }
          return <Token>e;
       });
 
-      let acc = 0;
-      let op = '+';
-      for (let elem of basic) {
-         if (typeof(elem) === 'number') {
-            acc = eval(acc + op + elem);
-         } else {
-            op = elem;
+      if (rules === 1) {
+         // Addition and multiplication in any order
+         while (basic.length > 1) {
+            basic.splice(0, 3, eval(basic.slice(0, 3).join('')));
          }
+      } else {
+         // Addition first then multiplication
+         let processOp = (op: Token) => {
+            let ix = basic.indexOf(op);
+            while (ix >= 0) {
+               basic.splice(ix - 1, 3, eval(basic.slice(ix - 1, ix + 2).join('')));
+               ix = basic.indexOf(op);
+            }
+         };
+         processOp('+');
+         processOp('*');
       }
 
-      return acc;
+      return +basic[0];
    }
 }
 
@@ -74,15 +81,20 @@ class Solution18 implements ISolution {
       let result = 0;
       for (let line of inputFile.readLines()) {
          let s = new ExpressionSolver(line);
-         result += s.calcExpr();
+         result += s.calcExpr(1);
       }
-      return ""+result;
+      return "" + result;
    }
 
    solvePart2(): string {
       const inputFile = new InputFile(this.dayNumber);
 
-      return "";
+      let result = 0;
+      for (let line of inputFile.readLines()) {
+         let s = new ExpressionSolver(line);
+         result += s.calcExpr(2);
+      }
+      return "" + result;
    }
 }
 
